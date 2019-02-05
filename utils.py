@@ -8,6 +8,7 @@ from pprint import pprint
 #Return list of yamls to parse relative to the atomic-red-team dir
 
 windows_executors = ['powershell', 'command_prompt']
+yaml_exclusions = ['index.yaml']
 
 def grabYamls():
    yamls = []
@@ -21,7 +22,9 @@ def grabYamls():
       for filename in files:
          file_path = os.path.join(root, filename)
          if ".yaml" in file_path:
-            yamls.append(file_path)
+            for exclusion in yaml_exclusions:
+               if not exclusion in file_path:
+                  yamls.append(file_path)
 
    return yamls
 
